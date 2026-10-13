@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Birthday! 🌸</title>
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600;700&family=Sacramento&display=swap" rel="stylesheet">
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background: linear-gradient(135deg, #ffe6f2, #ffb3d9, #ffcce6);
+            background-size: 400% 400%;
+            animation: gradientBG 15s ease infinite;
+            font-family: 'Quicksand', sans-serif;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            position: relative;
+        }
+
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* Glowing Fonts Effect */
+        .glow-text {
+            color: #fff;
+            text-shadow: 0 0 10px #ff66b2, 0 0 20px #ff66b2, 0 0 30px #ff3385, 0 0 40px #ff3385;
+            font-weight: 700;
+        }
+
+        .screen {
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            padding: 20px;
+            animation: fadeIn 1s ease-in-out forwards;
+        }
+
+        .screen.active {
+            display: flex;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: scale(0.95); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        /* Cute Buttons */
+        .cute-btn {
+            background-color: #ff66b2;
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            font-size: 1.2rem;
+            font-family: 'Quicksand', sans-serif;
+            font-weight: 600;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 0 15px rgba(255, 102, 178, 0.8), 0 5px 15px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            margin-top: 25px;
+        }
+
+        .cute-btn:hover {
+            transform: scale(1.08);
+            background-color: #ff3385;
+            box-shadow: 0 0 25px rgba(255, 51, 133, 1), 0 8px 20px rgba(0,0,0,0.15);
+        }
+
+        /* Screen 1: Welcome */
+        h1 {
+            font-family: 'Sacramento', cursive;
+            font-size: 4rem;
+            margin-bottom: 10px;
+        }
+
+        p {
+            font-size: 1.3rem;
+            color: #fff;
+            text-shadow: 0 0 8px #ff66b2;
+        }
+
+        /* Screen 2: Gallery */
+        .gallery-container {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            max-width: 400px;
+            margin: 20px 0;
+        }
+
+        .photo-card {
+            background: rgba(255, 255, 255, 0.85);
+            padding: 10px 10px 25px 10px;
+            border-radius: 15px;
+            box-shadow: 0 8px 20px rgba(255, 102, 178, 0.3);
+            transform: rotate(-2deg);
+            transition: transform 0.3s ease;
+        }
+
+        .photo-card:nth-child(even) {
+            transform: rotate(3deg);
+        }
+
+        .photo-card:hover {
+            transform: scale(1.05) rotate(0deg);
+        }
+
+        .photo-placeholder {
+            width: 130px;
+            height: 130px;
+            background: #ffd1dc;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #d81b60;
+            font-size: 0.9rem;
+            text-align: center;
+            padding: 10px;
+            border: 2px dashed #ff66b2;
+        }
+
+        /* Screen 3: Letter */
+        .letter-card {
+            background: rgba(255, 255, 255, 0.9);
+            padding: 30px;
+            border-radius: 20px;
+            max-width: 450px;
+            width: 90%;
+            box-shadow: 0 10px 30px rgba(255, 102, 178, 0.4);
+            border: 2px solid #ff99cc;
+            text-align: left;
+            max-height: 70vh;
+            overflow-y: auto;
+        }
+
+        .letter-card h2 {
+            font-family: 'Sacramento', cursive;
+            font-size: 2.8rem;
+            color: #ff3385;
+            text-align: center;
+            margin-bottom: 15px;
+            text-shadow: 0 0 5px rgba(255, 51, 133, 0.3);
+        }
+
+        .letter-card p {
+            color: #555;
+            text-shadow: none;
+            font-size: 1.05rem;
+            line-height: 1.6;
+            margin-bottom: 12px;
+        }
+
+        /* Falling Blossoms Animation */
+        .blossom {
+            position: absolute;
+            top: -10vh;
+            background-color: #ffb3d9;
+            border-radius: 150% 0 150% 0;
+            animation: fall linear infinite;
+            z-index: 1;
+            opacity: 0.8;
+        }
+
+        @keyframes fall {
+            0% {
+                transform: translateY(0) rotate(0deg) scale(0.8);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(110vh) rotate(360deg) scale(1.2);
+                opacity: 0.2;
+            }
+        }
+
+        /* Ensure content sits above blossoms */
+        .screen {
+            z-index: 2;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Falling Blossoms Container -->
+    <div id="blossoms-container"></div>
+
+    <!-- SCREEN 1: Welcome -->
+    <div id="screen-1" class="screen active">
+        <h1 class="glow-text">Happy Birthday!</h1>
+        <p class="glow-text">You have a special surprise waiting for you ✨</p>
+        <button class="cute-btn" onclick="nextScreen(2)">Open Gift 🎁</button>
+    </div>
+
+    <!-- SCREEN 2: Picture Gallery -->
+    <div id="screen-2" class="screen">
+        <h2 class="glow-text" style="font-family: 'Sacramento', cursive; font-size: 3rem; margin-bottom: 10px;">Sweet Memories</h2>
+        <p class="glow-text" style="margin-bottom: 15px;">Some of my favorite moments with you 💕</p>
+        
+        <div class="gallery-container">
+            <div class="photo-card">
+                <!-- Replace src with your image links e.g. <img src="pic1.jpg" style="width:130px; height:130px; border-radius:10px; object-fit:cover;"> -->
+                <div class="photo-placeholder">Replace with Photo 1</div>
+            </div>
+            <div class="photo-card">
+                <div class="photo-placeholder">Replace with Photo 2</div>
+            </div>
+            <div class="photo-card">
+                <div class="photo-placeholder">Replace with Photo 3</div>
+            </div>
+            <div class="photo-card">
+                <div class="photo-placeholder">Replace with Photo 4</div>
+            </div>
+        </div>
+
+        <button class="cute-btn" onclick="nextScreen(3)">Read Letter 💌</button>
+    </div>
+
+    <!-- SCREEN 3: The Letter -->
+    <div id="screen-3" class="screen">
+        <div class="letter-card">
+            <h2>To My Dearest Friend,</h2>
+            <p>Happy, happy birthday! 🎉 I am so incredibly grateful to have someone as wonderful, bright, and kind-hearted as you in my life.</p>
+            <p>Thank you for all the endless laughs, the comfort you bring, and all the core memories we've shared together. You truly deserve all the love and happiness in the world today and always.</p>
+            <p>May this year bring you closer to all your biggest dreams. Cheers to another amazing year ahead!</p>
+            <p style="text-align: right; margin-top: 20px; font-weight: 600; color: #ff3385;">With all my love, <br>— Your Friend</p>
+        </div>
+        <button class="cute-btn" onclick="nextScreen(1)" style="margin-top: 15px;">Replay 🌸</button>
+    </div>
+
+    <script>
+        // Screen Navigation Logic
+        function nextScreen(screenNumber) {
+            const screens = document.querySelectorAll('.screen');
+            screens.forEach(screen => screen.classList.remove('active'));
+            
+            document.getElementById(`screen-${screenNumber}`).classList.add('active');
+        }
+
+        // Generate Falling Blossom Petals
+        function createBlossoms() {
+            const container = document.getElementById('blossoms-container');
+            const blossomCount = 25;
+
+            for (let i = 0; i < blossomCount; i++) {
+                const blossom = document.createElement('div');
+                blossom.classList.add('blossom');
+                
+                // Random positioning and styling
+                const size = Math.random() * 12 + 8; // Size between 8px and 20px
+                blossom.style.width = `${size}px`;
+                blossom.style.height = `${size * 0.6}px`;
+                blossom.style.left = `${Math.random() * 100}vw`;
+                
+                // Random animation duration and delay
+                const duration = Math.random() * 6 + 4; // Between 4s and 10s
+                const delay = Math.random() * 5;
+                blossom.style.animationDuration = `${duration}s`;
+                blossom.style.animationDelay = `${delay}s`;
+                
+                // Subtle color variations for petals
+                const colors = ['#ffb3d9', '#ffcce6', '#ff99cc', '#ff99bb'];
+                blossom.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+
+                container.appendChild(blossom);
+            }
+        }
+
+        // Initialize blossoms on load
+        window.onload = createBlossoms;
+    </script>
+</body>
+</html>
